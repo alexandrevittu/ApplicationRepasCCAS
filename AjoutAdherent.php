@@ -139,6 +139,8 @@ $(function()
       <label for="fnom">Remarques</label><br>
       <!-- <input type="text" name="remarque" id="fremarque" /><br> -->
       <textarea name="remarque" id="fremarque" form="ajoutadherent" rows="4" cols="50"/></textarea><br>
+      <input type="radio" name="impot" value="1" required> Imposable<br>
+      <input type="radio" name="impot" value="2" required> Non imposable<br>
       <p><input class="" type="submit" value="Valider" id="test"/><br>
     </form>
     <?php
@@ -152,11 +154,12 @@ $(function()
      {
        $dateactuel = date_create(date('Y-m-d'));
        $datesaisie = date_create(($_POST["date"]));
+       var_dump($_POST['impot']);
        $diff = date_diff($datesaisie,$dateactuel);
        $nb= (int)$diff->format('%R%a');
        if((int)$nb>=0)                        //verifie si la date n'est pas suppérieur a celle du jour
        {
-         if(AjoutAdherent(($_POST["nom"]),($_POST["prenom"]),($_POST["adresse"]),($_POST["date"]),($_POST["remarque"])) == false)
+         if(AjoutAdherent(($_POST["nom"]),($_POST["prenom"]),($_POST["adresse"]),($_POST["date"]),($_POST["remarque"]),($_POST["impot"])) == false)
          {
            echo"<script>alert('L\'adhérent que vous voulez ajouter existe dêja !');</script>";
          }

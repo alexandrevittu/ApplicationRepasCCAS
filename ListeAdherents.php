@@ -73,6 +73,7 @@ $lesAdherents = ListerAdherent();
             <th>Adresse</th>
             <th>Date d'adhésion</th>
             <th>Remarques</th>
+            <th>Imposable</th>
             <th>Modifier/Supprimer</th>
           </tr>
         </thead>
@@ -123,6 +124,14 @@ $lesAdherents = ListerAdherent();
                 echo '<td>'.$unAdherent['adresse'].'</td>';
                 echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
                 echo '<td>'.$unAdherent['remarque'].'</td>';
+                if($unAdherent['idTypeRepas'] == 1)
+                {
+                  echo '<td>Impossable</td>';
+                }
+                else {
+                  echo '<td>Non impossable</td>';
+
+                }
                 echo '<td>'.'<div id=conteneurBtn><form action="ModifAdherent.php" id="modifadherent" method="POST"><input type="hidden" name="id" value='.$id.'><input class="btn btn-info" id="btn-view" type="submit" value="Modifier"/></form><form id="formSupp" method="POST" ><input type="hidden" name="id" value='.$id.'><button class="btn btn-danger" type="submit" id="btn-view" onclick="">Supprimer</button></form></td>';
                 echo '</tr>';
 
@@ -134,6 +143,14 @@ $lesAdherents = ListerAdherent();
                 echo '<td>'.$unAdherent['adresse'].'</td>';
                 echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
                 echo '<td>'.$unAdherent['remarque'].'</td>';
+                if($unAdherent['idTypeRepas'] == 1)
+                {
+                  echo '<td>Impossable</td>';
+                }
+                else {
+                  echo '<td>Non impossable</td>';
+
+                }
                 echo '<td>'.'<div id=conteneurBtn><form action="ModifAdherent.php" id="modifadherent" method="POST"><input type="hidden" name="id" value='.$id.'><input class="btn btn-info" id="btn-view" type="submit" value="Modifier"/></form><form id="formSupp" method="POST" ><input type="hidden" name="id" value='.$id.'><button class="btn btn-danger" type="submit" id="btn-view" onclick="">Supprimer</button></form></td>';
                 echo '</tr>';
 
@@ -145,6 +162,14 @@ $lesAdherents = ListerAdherent();
                 echo '<td>'.$unAdherent['adresse'].'</td>';
                 echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
                 echo '<td>'.$unAdherent['remarque'].'</td>';
+                if($unAdherent['idTypeRepas'] == 1)
+                {
+                  echo '<td>Impossable</td>';
+                }
+                else {
+                  echo '<td>Non impossable</td>';
+
+                }
                 echo '<td><div id=conteneurBtn><form action="ModifAdherent.php" id="modifadherent" method="POST"><input type="hidden" name="id" value='.$id.'><input class="btn btn-info" id="btn-view" type="submit" value="Modifier"/></form><form id="formSupp" method="POST" id=suppAdherent ><input type="hidden" name="id" value='.$id.'><button class="btn btn-danger" type="submit" id="btn-view" onclick="">Supprimer</button></form></td>';
                 echo '</tr>';
               }

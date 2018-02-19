@@ -13,14 +13,15 @@ function connexion(){
   return $dbh;
 }
 
-function AjoutAdherent($nom,$prenom,$adresse,$dateadhesion,$remarque){
+function AjoutAdherent($nom,$prenom,$adresse,$dateadhesion,$remarque,$impot){
   $dbh= connexion();
-  $PdoStatement = $dbh ->prepare("insert into adherents values (NULL,:nom,:prenom,:adresse,:dateadhesion,:remarque,1)");
+  $PdoStatement = $dbh ->prepare("insert into adherents values (NULL,:nom,:prenom,:adresse,:dateadhesion,:remarque,:impot)");
   $PdoStatement->bindvalue("nom",$nom);
   $PdoStatement->bindvalue("prenom",$prenom);
   $PdoStatement->bindvalue("adresse",$adresse);
   $PdoStatement->bindvalue("dateadhesion",$dateadhesion);
   $PdoStatement->bindvalue("remarque",$remarque);
+  $PdoStatement->bindvalue("impot",$impot);
   if($PdoStatement->execute()){
     $PdoStatement->closeCursor();
     $dbh=null;
@@ -149,5 +150,48 @@ function ListerAdherent(){
 function dateFr($date)
 {
   return strftime('%d-%m-%Y',strtotime($date));
+}
+function GetAdherent($id)
+{
+  $dbh = connexion();
+  try{
+    $pdoStatement = $dbh->prepare("select * from adherents where id=:id");
+    $pdoStatement->bindvalue("id",$id);
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetch();
+    return $result;
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation de l'adherent ");
+  }
+}
+function ModifAdherent($id,$nom,$prenom,$adresse,$date,$remarque)
+{
+  $dbh = connexion();
+  $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+  $pdoStatement = $dbh->prepare("update adherents set nom =:nom,prenom =:prenom,adresse =:adresse,dateAdhesion = :dateAdhesion,remarque = :remarque where id = :id ");
+  $pdoStatement->bindvalue("nom",$nom);
+  $pdoStatement->bindvalue("prenom",$prenom);
+  $pdoStatement->bindvalue("adresse",$adresse);
+  $pdoStatement->bindvalue("dateAdhesion",$date);
+  $pdoStatement->bindvalue("remarque",$remarque);
+  $pdoStatement->bindvalue("id",$id);
+  if($pdoStatement->execute())
+  {
+
+    $pdoStatement->closeCursor();
+    $dbh=null;
+  }
+  else
+  {
+    throw new Exception("Erreur modification d'adherent");
+  }
+}
+function SupprimerAdherent($idAdherentSupp){
+  $pdo = connexion();
+  $requete=$pdo->prepare("DELETE from adherents WHERE id= :idAdherentSupp ");
+  $requete->bindValue(":idAdherentSupp",$idAdherentSupp);
+  $requete->execute();
 }
  ?>
