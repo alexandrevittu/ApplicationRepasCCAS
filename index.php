@@ -37,5 +37,28 @@
   </fieldset>
 </div>
 </div>
+    <div id="trimestre">
+      <?php
+      $mois = date('m');
+      //$mois = 02;
+
+      if($mois>=01 && $mois<=03)
+      {
+        echo "<label>Trimestre en cours :Janvier/Fevrier/Mars</label>";
+      }
+      elseif($mois>=04 && $mois<=06)
+      {
+        echo '<label>Trimestre en cours :Avril/Mai/Juin</label>';
+      }
+      elseif($mois>=10 && $mois<=12)
+      {
+        echo '<label>Trimestre en cours :Octobre/Novembre/Decembre</label>';
+      }
+      else
+      {
+        echo '<label>Trimestre en cours :Juillet/Aout/Septembre</label>';
+      }
+      ?>
+    </div>
 </body>
 </html>

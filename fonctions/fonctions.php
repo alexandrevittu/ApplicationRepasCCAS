@@ -412,4 +412,73 @@ function ModifNbRepasParAdherent($idadherent,$trimestre,$nbrepas)
     throw new Exception("Erreur modif trajet court par adherent");
   }
 }
+function GetPrixImposable()
+{
+  $dbh = connexion();
+  try
+  {
+    $pdoStatement = $dbh->prepare("select prix from typerepas where id =1");
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetch();
+    return $result;
+    $dbh=null;
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation du prix d'un trajet cours");
+  }
+}
+function GetPrixNonImposable()
+{
+  $dbh = connexion();
+  try
+  {
+    $pdoStatement = $dbh->prepare("select prix from typerepas where id =2");
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetch();
+    return $result;
+    $dbh=null;
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation du prix d'un trajet cours");
+  }
+}
+function Getnbrepas($id)
+{
+  $dbh = connexion();
+  try
+  {
+    $pdoStatement = $dbh->prepare("select nbrepas,idAdherent from repas where idTrimestre =:id");
+    $pdoStatement->bindvalue("id",$id);
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetchAll();
+    return $result;
+    $dbh=null;
+
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation de l'adherent ");
+  }
+}
+function GetnbRepasParAdherent($id,$trimestre)
+{
+  $dbh = connexion();
+  try
+  {
+    $pdoStatement = $dbh->prepare("select nbrepas from repas where idTrimestre =:trimestre AND idAdherent =:id");
+    $pdoStatement->bindvalue("trimestre",$trimestre);
+    $pdoStatement->bindvalue("id",$id);
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetch();
+    return $result;
+    $dbh=null;
+
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation de l'adherent ");
+  }
+}
  ?>

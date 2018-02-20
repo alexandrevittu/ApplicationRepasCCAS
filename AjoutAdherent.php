@@ -4,10 +4,13 @@
   <meta charset="utf-8">
   <title>Ajout d'un adherent</title>
   <link rel="stylesheet" href="style.css">
+
   <?php
   include_once "header.php";
   include_once "fonctions/fonctions.php";
   ?>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
     $( "#dialog-confirm" ).dialog({  //Popup customisé qui s'affiche lors de la validation
@@ -151,7 +154,6 @@ $(function()
      {
        $dateactuel = date_create(date('Y-m-d'));
        $datesaisie = date_create(($_POST["date"]));
-       var_dump($_POST['impot']);
        $diff = date_diff($datesaisie,$dateactuel);
        $nb= (int)$diff->format('%R%a');
        if((int)$nb>=0)                        //verifie si la date n'est pas suppérieur a celle du jour
@@ -161,9 +163,6 @@ $(function()
            echo"<script>alert('L\'adhérent que vous voulez ajouter existe dêja !');</script>";
          }
          else {
-
-
-
 
            //ajoute l'adherent
          $id = Getidadherent($_POST["nom"],$_POST["prenom"]);

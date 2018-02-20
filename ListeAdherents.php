@@ -65,7 +65,7 @@ $lesAdherents = ListerAdherent();
             <th>Nom</th>
             <th>Prénom</th>
             <th>Adresse</th>
-            <th>Date d'adhésion</th>
+
             <th>Remarques</th>
             <th>Imposable</th>
             <th>Modifier/Supprimer</th>
@@ -116,7 +116,7 @@ $lesAdherents = ListerAdherent();
                 echo '<td>'.$unAdherent['nom'].'</td>';
                 echo '<td>'.$unAdherent['prenom'].'</td>';
                 echo '<td>'.$unAdherent['adresse'].'</td>';
-                echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
+                //echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
                 echo '<td>'.$unAdherent['remarque'].'</td>';
                 if($unAdherent['idTypeRepas'] == 1)
                 {
@@ -135,7 +135,7 @@ $lesAdherents = ListerAdherent();
                 echo '<td>'.$unAdherent['nom'].'</td>';
                 echo '<td>'.$unAdherent['prenom'].'</td>';
                 echo '<td>'.$unAdherent['adresse'].'</td>';
-                echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
+                //echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
                 echo '<td>'.$unAdherent['remarque'].'</td>';
                 if($unAdherent['idTypeRepas'] == 1)
                 {
@@ -154,7 +154,7 @@ $lesAdherents = ListerAdherent();
                 echo '<td>'.$unAdherent['nom'].'</td>';
                 echo '<td>'.$unAdherent['prenom'].'</td>';
                 echo '<td>'.$unAdherent['adresse'].'</td>';
-                echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
+                //echo '<td>'.dateFr($unAdherent['dateAdhesion']).'</td>';
                 echo '<td>'.$unAdherent['remarque'].'</td>';
                 if($unAdherent['idTypeRepas'] == 1)
                 {

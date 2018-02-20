@@ -36,7 +36,7 @@
     <hr class="style-ligne">
 </div>
 <?php
-  $nbrepas = Getnbtrajetcours($trimestre);
+  $nbrepas = GetnbRepasParAdherent($idadherent,$trimestre);
   echo"<script>document.getElementById('nbrepas').value=".$nbrepas['nbrepas']."</script>";
 
  ?>
