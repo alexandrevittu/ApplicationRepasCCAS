@@ -4,9 +4,6 @@
   <meta charset="utf-8">
   <title>Ajout d'un adherent</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <?php
   include_once "header.php";
   include_once "fonctions/fonctions.php";
@@ -173,7 +170,8 @@ $(function()
          $trimestre = getTrimestre();
          $nbtrajet =0;
          for($i=1;$i<=4;$i++)     //ajoute des trajet court,moyen,long avec nbtrahet=0 pour chaque adherent crée pour chaque trimestre
-         {
+         {                        //obligatoire pour l'appli trajet
+           ajoutRepasParAdherent($id['id'],$i);
            ajouttrajetcourtparadherent($id['id'],$i,$nbtrajet);
            ajouttrajetmoyenparadherent($id['id'],$i,$nbtrajet);
            ajouttrajetlongparadherent($id['id'],$i,$nbtrajet);

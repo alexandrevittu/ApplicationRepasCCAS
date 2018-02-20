@@ -8,12 +8,6 @@ $lesAdherents = ListerAdherent();
 <head>
   <meta charset="utf-8">
   <title>Liste des adherent</title>
-
-  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"> <!-- ici-->
-  <link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-  <link href="assets/datatables.min.css" rel="stylesheet" type="text/css"> <!-- ici-->
-  <script type="text/javascript" src="assets/datatables.min.js"></script> <!-- ici-->
-  <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.3/js/dataTables.fixedHeader.min.js"></script>
   <style type="text/css">
   #dis{
     display:none;

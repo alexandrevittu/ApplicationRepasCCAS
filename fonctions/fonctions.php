@@ -194,4 +194,222 @@ function SupprimerAdherent($idAdherentSupp){
   $requete->bindValue(":idAdherentSupp",$idAdherentSupp);
   $requete->execute();
 }
+function ModifTarifNonImposable($prix)
+{
+  $dbh = connexion();
+  $pdoStatement = $dbh ->prepare("update typerepas set prix = :prix WHERE id='2'");
+  $pdoStatement->bindvalue("prix",$prix);
+  if($pdoStatement->execute())
+  {
+    $pdoStatement->closeCursor();
+    $dbh=null;
+  }
+  else
+  {
+    throw new Exception("Erreur modif prix non imposable");
+  }
+}
+function ModifTarifImposable($prix)
+{
+  $dbh = connexion();
+  $pdoStatement = $dbh ->prepare("update typerepas set prix = :prix WHERE id='1'");
+  $pdoStatement->bindvalue("prix",$prix);
+  if($pdoStatement->execute())
+  {
+    $pdoStatement->closeCursor();
+    $dbh=null;
+  }
+  else
+  {
+    throw new Exception("Erreur modif prix imposable");
+  }
+}
+function GetTarif()
+{
+  $dbh = connexion();
+  try{
+
+    $pdoStatement = $dbh->prepare("select prix from typerepas");
+    $pdoStatement->execute();
+
+    $result = $pdoStatement->fetchAll();
+    return $result;
+
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation des tarif repas");
+  }
+}
+
+function ajoutRepasParAdherent($idadherent,$trimestre)
+{
+  $dbh= connexion();
+  $PdoStatement = $dbh ->prepare("insert into repas values (NULL,:idadherent,0,:idtrimestre)");
+  $PdoStatement->bindvalue("idadherent",$idadherent);
+  $PdoStatement->bindvalue("idtrimestre",$trimestre);
+  if($PdoStatement->execute()){
+    $PdoStatement->closeCursor();
+    $dbh=null;
+  }
+  else{
+    throw new Exception("Erreur ajout repas d'aherent");
+  }
+}
+function getTrimestreLib($idTrimestre){
+  $dbh = connexion();
+  try{
+    $pdoStatement = $dbh->prepare("select libelle FROM trimestre WHERE id = :idTrimestre");
+    $pdoStatement->bindValue("idTrimestre",$idTrimestre);
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetch();
+    return $result;
+    $dbh = null;
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("Erreur...");
+  }
+}
+function orderTrimestre(){
+
+  $trimestre = getTrimestre();
+  $libelleTrimestre = getTrimestreLib($trimestre);
+  $libelleTr = utf8_encode($libelleTrimestre['libelle']);
+  $date = date('Y');
+
+$lesTrimestres = array();
+
+  if ($libelleTr == "Janvier/Février/Mars") {
+
+    $lesTrimestres = array(
+      1 => array(
+        "libelle" => "Avril/Mai/Juin",
+        "annee" => strval($date-1),
+        "idTrimestre" => 2,
+      ),
+      2 => array(
+        "libelle" => "Juillet/Aout/Septembre",
+        "annee" => strval($date-1),
+        "idTrimestre" => 3,
+      ),
+      3 => array(
+        "libelle" => "Octobre/Novembre/Decembre",
+        "annee" => strval($date-1),
+        "idTrimestre" => 4,
+      ),
+      4 => array(
+        "libelle" => $libelleTr,
+        "annee" => $date,
+        "idTrimestre" => $trimestre,
+      )
+    );
+  }elseif ($libelleTr == "Avril/Mai/Juin") {
+
+    $lesTrimestres = array(
+      1 => array(
+        "libelle" => "Juillet/Aout/Septembre",
+        "annee" => strval($date-1),
+        "idTrimestre" => 3,
+      ),
+      2 => array(
+        "libelle" => "Octobre/Novembre/Decembre",
+        "annee" => strval($date-1),
+        "idTrimestre" => 4,
+      ),
+      3 => array(
+        "libelle" => "Janvier/Février/Mars",
+        "annee" => $date,
+        "idTrimestre" => 1,
+      ),
+      4 => array(
+        "libelle" => $libelleTr,
+        "annee" => $date,
+        "idTrimestre" => 2,
+      )
+    );
+  }elseif ($libelleTr == "Juillet/Aout/Septembre") {
+
+        $lesTrimestres = array(
+          1 => array(
+            "libelle" => "Octobre/Novembre/Decembre",
+            "annee" => strval($date-1),
+            "idTrimestre" => 4,
+          ),
+          2 => array(
+            "libelle" => "Janvier/Février/Mars",
+            "annee" => $date,
+            "idTrimestre" => 1,
+          ),
+          3 => array(
+            "libelle" => "Avril/Mai/Juin",
+            "annee" => $date,
+            "idTrimestre" => 2,
+          ),
+          4 => array(
+            "libelle" => $libelleTr,
+            "annee" => $date,
+            "idTrimestre" => 3,
+          )
+        );
+  }elseif ($libelleTr == "Octobre/Novembre/Décembre") {
+    $lesTrimestres = array(
+      1 => array(
+        "libelle" => "Janvier/Février/Mars",
+        "annee" => $date,
+        "idTrimestre" => 1,
+      ),
+      2 => array(
+        "libelle" => "Avril/Mai/Juin",
+        "annee" => $date,
+        "idTrimestre" => 2,
+      ),
+      3 => array(
+        "libelle" => "Juillet/Aout/Septembre",
+        "annee" => $date,
+        "idTrimestre" => 3,
+      ),
+      4 => array(
+        "libelle" => $libelleTr,
+        "annee" => $date,
+        "idTrimestre" => 4,
+      )
+    );
+  }
+  return $lesTrimestres;
+}
+function Getnbtrajetcours($id)
+{
+  $dbh = connexion();
+  try
+  {
+    $pdoStatement = $dbh->prepare("select nbrepas,idAdherent from repas inner join adherents on repas.idAdherent = adherents.id where idTrimestre =:id");
+    $pdoStatement->bindvalue("id",$id);
+    $pdoStatement->execute();
+    $result = $pdoStatement->fetch();
+    return $result;
+    $dbh=null;
+  }
+  catch(Exception $e)
+  {
+    throw new Exception("erreur lors de la recuperation de l'adherent ");
+  }
+}
+function ModifNbRepasParAdherent($idadherent,$trimestre,$nbrepas)
+{
+  $dbh = connexion();
+  $pdoStatement = $dbh->prepare("update repas set nbrepas = :nbrepas WHERE idAdherent=:idadherent AND idTrimestre=:trimestre");
+  $pdoStatement->bindvalue("nbrepas",$nbrepas);
+  $pdoStatement->bindvalue("trimestre",$trimestre);
+  $pdoStatement->bindvalue("idadherent",$idadherent);
+  if($pdoStatement->execute())
+  {
+    $pdoStatement->closeCursor();
+    $dbh=null;
+  }
+  else
+  {
+    throw new Exception("Erreur modif trajet court par adherent");
+  }
+}
  ?>
